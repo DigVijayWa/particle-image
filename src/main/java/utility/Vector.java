@@ -47,6 +47,9 @@ public class Vector {
   }
 
   public Vector normalize() {
+    if(this.x == 0 && this.y == 0){
+      return new Vector(0,0);
+    }
     double length = Math.sqrt((this.x * this.x) + (this.y * this.y));
     return new Vector(this.x/length, this.y/length);
   }

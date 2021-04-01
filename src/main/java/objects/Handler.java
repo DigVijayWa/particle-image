@@ -21,6 +21,13 @@ public class Handler {
 
   int[][] countours = new int[160][160];
 
+  boolean formationComplete = false;
+
+  public int offsetX = 200;
+  public int offsetY = 200;
+
+  int counter = 0;
+
   public Handler() {
     for (int i = 0; i < HEIGHT; i++) {
       for (int j = 0; j < WIDTH; j++) {
@@ -36,18 +43,31 @@ public class Handler {
   public void render(Graphics2D graphics2D) {
     for (int i = 0; i < WIDTH; i++) {
       for (int j = 0; j < HEIGHT; j++) {
-        particles[i][j].render(graphics2D, new Color(countours[j][i]));
+        particles[j][i].render(graphics2D, new Color(countours[i][j]));
       }
     }
   }
 
   public void update(long passedTime) {
-    for (int i = 0; i < HEIGHT; i++) {
-      for (int j = 0; j < WIDTH; j++) {
-        target.setXandY(j+200,i+200);
-        Vector velocity = calculateEffectiveVector(particles[j][i].getPosition(), target).multiplyByScalar(3.0);
-        particles[j][i].update(passedTime, velocity);
+    counter = 0;
+    Vector mag = null;
+    if(!formationComplete) {
+      for (int i = 0; i < HEIGHT; i++) {
+        for (int j = 0; j < WIDTH; j++) {
+          target.setXandY(j + offsetX, i + offsetY);
+          Vector velocity = calculateEffectiveVector(particles[j][i].getPosition(), target)
+              .multiplyByScalar(1.2);
+          counter = velocity.getMagnitude() < 1.2 ? counter + 1 : counter;
+          mag = velocity;
+          particles[j][i].update(passedTime, velocity);
+
+        }
       }
+    }
+    //System.out.println(mag.getX()+" : "+mag.getY());
+    if(counter >= (WIDTH * HEIGHT)) {
+      System.out.println("\n Formation Complete :: ");
+      formationComplete = true;
     }
   }
 
@@ -57,5 +77,21 @@ public class Handler {
 
   public double mapRandomValue(double randomValue) {
     return 0 + ((640)) * (randomValue - 0);
+  }
+
+  public int getOffsetX() {
+    return offsetX;
+  }
+
+  public void setOffsetX(int offsetX) {
+    this.offsetX = offsetX;
+  }
+
+  public int getOffsetY() {
+    return offsetY;
+  }
+
+  public void setOffsetY(int offsetY) {
+    this.offsetY = offsetY;
   }
 }

@@ -26,7 +26,7 @@ public class Particle {
   }
 
   public void update(long timePassed, Vector velocity) {
-      long timePassedSeconds = GameUtility.getTimeInSeconds(timePassed);
+      long timePassedSeconds = GameUtility.getTimeInMiliSeconds(timePassed);
       accelaration = accelaration.additionVector(accelaration, velocity, timePassedSeconds);
       position = position.additionVector(position, accelaration, timePassedSeconds);
       accelaration.setXandY(0, 0);

@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import objects.Handler;
+import utility.MouseListener;
 
 public class App extends Canvas implements Runnable{
 
@@ -17,6 +18,11 @@ public class App extends Canvas implements Runnable{
   private static final int height = 640;
   static int totalSeconds = 1;
   private boolean running = false;
+
+  public App() {
+    this.addMouseListener(new MouseListener(handler));
+  }
+
   @Override
   public void run() {
     double target = 60.0;
