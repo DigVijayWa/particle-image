@@ -47,15 +47,24 @@ public class Vector {
   }
 
   public Vector normalize() {
-    if(this.x == 0 && this.y == 0){
-      return new Vector(0,0);
-    }
     double length = Math.sqrt((this.x * this.x) + (this.y * this.y));
-    return new Vector(this.x/length, this.y/length);
+    return new Vector(this.x / length, this.y / length);
   }
 
   public Vector multiplyByScalar(double scalar) {
     return new Vector(this.x * scalar, this.y * scalar);
+  }
+
+  public Vector limitVector(double limit) {
+    this.x = this.x > limit ? limit : this.x;
+    this.y = this.y > limit ? limit : this.y;
+
+    return new Vector(this.x, this.y);
+  }
+
+  public boolean equals(Vector otherVector, double precision) {
+    return Math.abs(this.x - otherVector.getX()) <= precision
+        && Math.abs(this.y - otherVector.getY()) <= precision;
   }
 
   public double getX() {

@@ -17,11 +17,15 @@ public class Handler {
 
   Particle[][] particles = new Particle[WIDTH][HEIGHT];
 
+  Vector[][] randomPosition = new Vector[WIDTH][HEIGHT];
+
   Vector target = new Vector(100,100);
 
   int[][] countours = new int[160][160];
 
   boolean formationComplete = false;
+
+  boolean dispersion = false;
 
   public int offsetX = 200;
   public int offsetY = 200;
@@ -31,7 +35,8 @@ public class Handler {
   public Handler() {
     for (int i = 0; i < HEIGHT; i++) {
       for (int j = 0; j < WIDTH; j++) {
-          particles[j][i] = new Particle(mapRandomValue(Math.random()), mapRandomValue(Math.random()));
+        particles[j][i] = new Particle(mapRandomValue(Math.random()), mapRandomValue(Math.random()));
+        randomPosition[j][i] = new Vector(mapRandomValue(Math.random()), mapRandomValue(Math.random()));
       }
     }
 
@@ -51,30 +56,40 @@ public class Handler {
   public void update(long passedTime) {
     counter = 0;
     Vector mag = null;
-    if(!formationComplete) {
       for (int i = 0; i < HEIGHT; i++) {
         for (int j = 0; j < WIDTH; j++) {
-          target.setXandY(j + offsetX, i + offsetY);
-          Vector velocity = calculateEffectiveVector(particles[j][i].getPosition(), target)
-              .multiplyByScalar(1.2);
-          counter = velocity.getMagnitude() < 1.2 ? counter + 1 : counter;
-          mag = velocity;
-          particles[j][i].update(passedTime, velocity);
+          if(dispersion) {
+            target.setXandY(randomPosition[j][i].getX(), randomPosition[j][i].getY());
+          }else {
+            target.setXandY(j + offsetX, i + offsetY);
+          }
+          Vector desired = calculateEffectiveVector(particles[j][i].getPosition(), target).normalize().multiplyByScalar(1.2);
+          particles[j][i].update(passedTime, desired);
 
+          if(particles[j][i].getPosition().equals(target, 0)) {
+            if(dispersion){
+              dispersion = false;
+            }
+          }
         }
       }
     }
-    //System.out.println(mag.getX()+" : "+mag.getY());
-    if(counter >= (WIDTH * HEIGHT)) {
-      System.out.println("\n Formation Complete :: ");
-      formationComplete = true;
-    }
-  }
 
   private static Vector calculateEffectiveVector(Vector currentPosition, Vector targetPosition) {
-     return targetPosition.subtractionVector(targetPosition, currentPosition).normalize();
+     return targetPosition.subtractionVector(targetPosition, currentPosition);
   }
 
+  public boolean isDispersion() {
+    return dispersion;
+  }
+
+  public void setDispersion(boolean dispersion) {
+    this.dispersion = dispersion;
+  }
+
+  public boolean getDispersion() {
+    return this.dispersion;
+  }
   public double mapRandomValue(double randomValue) {
     return 0 + ((640)) * (randomValue - 0);
   }

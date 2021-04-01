@@ -10,26 +10,34 @@ public class Particle {
   private Vector position;
   private Vector accelaration;
   private Vector wind;
+  private Vector velocity;
+
+  private Vector gravity;
 
   private int size;
 
   public Particle(double xPosition, double yPosition) {
     position = new Vector(xPosition, yPosition);
-    accelaration = new Vector(0,0);
+    accelaration = new Vector(0, 0);
+    velocity = new Vector(0,0);
+    gravity = new Vector(0, 5);
   }
 
   public void render(Graphics2D graphics2D, Color color) {
     Color prevColor = graphics2D.getColor();
     graphics2D.setColor(color);
-    graphics2D.drawLine((int)position.getX(), (int)position.getY(), (int)position.getX(), (int)position.getY());
+    graphics2D.drawLine((int) position.getX(), (int) position.getY(), (int) position.getX(),
+        (int) position.getY());
     graphics2D.setColor(prevColor);
   }
 
   public void update(long timePassed, Vector velocity) {
-      long timePassedSeconds = GameUtility.getTimeInMiliSeconds(timePassed);
-      accelaration = accelaration.additionVector(accelaration, velocity, timePassedSeconds);
-      position = position.additionVector(position, accelaration, timePassedSeconds);
-      accelaration.setXandY(0, 0);
+
+    long timePassedSeconds = GameUtility.getTimeInMiliSeconds(timePassed);
+    this.velocity = velocity;
+    accelaration = accelaration.additionVector(accelaration, this.velocity, timePassedSeconds);
+    position = position.additionVector(position, accelaration, timePassedSeconds);
+    accelaration.setXandY(0, 0);
   }
 
   public Vector getPosition() {
@@ -62,5 +70,13 @@ public class Particle {
 
   public void setSize(int size) {
     this.size = size;
+  }
+
+  public Vector getVelocity() {
+    return velocity;
+  }
+
+  public void setVelocity(Vector velocity) {
+    this.velocity = velocity;
   }
 }

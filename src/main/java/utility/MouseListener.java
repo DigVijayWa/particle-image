@@ -13,7 +13,16 @@ public class MouseListener extends MouseAdapter {
   }
 
   public void mousePressed(MouseEvent event) {
-    handler.setOffsetX(event.getX() - 50);
-    handler.setOffsetY(event.getY() - 50);
+
+    if(event.getButton() == MouseEvent.BUTTON1) {
+      if ((event.getX() >= handler.offsetX && event.getX() <= handler.offsetX + Handler.WIDTH) && (
+          event.getY() >= handler.offsetY && event.getY() <= handler.offsetY + Handler.HEIGHT)) {
+        handler.setDispersion(!handler.getDispersion());
+      }
+    }
+    else if(event.getButton() == MouseEvent.BUTTON2) {
+      handler.setOffsetY(event.getY());
+      handler.setOffsetX(event.getX());
+    }
   }
 }
