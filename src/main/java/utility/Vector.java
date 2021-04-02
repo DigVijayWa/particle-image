@@ -26,19 +26,18 @@ public class Vector {
     return Math.sqrt(addition);
   }
 
-  public void Vector1(double angle, double magnitude) {
-    this.angle = angle;
-    this.magnitude = magnitude;
-    setXY();
+  public Vector additionVector(Vector vector, long timeLapsed) {
+    return new Vector(this.getX() + vector.getX() * 1,
+        this.getY() + vector.getY() * 1);
   }
 
-  public Vector additionVector(Vector vector1, Vector vector2, long timeLapsed) {
-    return new Vector(vector1.getX() + vector2.getX() * 1,
-        vector1.getY() + vector2.getY() * 1);
+  public Vector additionVector(Vector vector) {
+    return new Vector(this.getX() + vector.getX() * 1,
+        this.getY() + vector.getY() * 1);
   }
 
-  public Vector subtractionVector(Vector vector1, Vector vector2) {
-    return new Vector(vector1.getX() - vector2.getX(), vector1.getY() - vector2.getY());
+  public Vector subtractionVector(Vector vector) {
+    return new Vector(this.getX() - vector.getX(), this.getY() - vector.getY());
   }
 
   public void setXY() {

@@ -78,7 +78,7 @@ public class Handler {
     }
 
   private static Vector calculateEffectiveVector(Vector currentPosition, Vector targetPosition) {
-     return targetPosition.subtractionVector(targetPosition, currentPosition);
+     return targetPosition.subtractionVector(currentPosition);
   }
 
   public boolean isDispersion() {
