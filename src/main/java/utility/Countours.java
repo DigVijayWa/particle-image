@@ -61,7 +61,7 @@ public class Countours {
     for (int i = 0; i < height; i++) {
 
       for (int j = 0; j < width; j++) {
-        bitMap[i][j] = image.getRGB(j,i);
+        bitMap[j][i] = image.getRGB(j,i);
       }
     }
 

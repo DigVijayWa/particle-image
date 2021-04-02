@@ -48,7 +48,7 @@ public class Handler {
   public void render(Graphics2D graphics2D) {
     for (int i = 0; i < WIDTH; i++) {
       for (int j = 0; j < HEIGHT; j++) {
-        particles[j][i].render(graphics2D, new Color(countours[i][j]));
+        particles[j][i].render(graphics2D, new Color(countours[j][i]));
       }
     }
   }
@@ -63,13 +63,15 @@ public class Handler {
           }else {
             target.setXandY(j + offsetX, i + offsetY);
           }
-          Vector desired = calculateEffectiveVector(particles[j][i].getPosition(), target).normalize().multiplyByScalar(1.2);
-          particles[j][i].update(passedTime, desired);
+          Vector desired = calculateEffectiveVector(particles[j][i].getPosition(), target).normalize().multiplyByScalar(3);
 
-          if(particles[j][i].getPosition().equals(target, 0)) {
-            if(dispersion){
-              dispersion = false;
-            }
+          Vector velocity = calculateEffectiveVector(particles[j][i].getVelocity(), desired).limitVector(2);
+
+          particles[j][i].update(passedTime, velocity);
+
+          if(particles[j][i].getPosition().equals(target, 2)) {
+            particles[j][i].setPosition(new Vector(target.getX(), target.getY()));
+            particles[j][i].setFixed(true);
           }
         }
       }
@@ -108,5 +110,13 @@ public class Handler {
 
   public void setOffsetY(int offsetY) {
     this.offsetY = offsetY;
+  }
+
+  public void updateAllParticlesFixedState() {
+    for (int i = 0; i < HEIGHT; i++) {
+      for (int j = 0; j < WIDTH; j++) {
+        particles[j][i].setFixed(false);
+      }
+    }
   }
 }

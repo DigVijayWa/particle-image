@@ -56,8 +56,8 @@ public class Vector {
   }
 
   public Vector limitVector(double limit) {
-    this.x = this.x > limit ? limit : this.x;
-    this.y = this.y > limit ? limit : this.y;
+    this.x = Math.abs(this.x) > limit ? (this.x/Math.abs(this.x))*limit : this.x;
+    this.y = Math.abs(this.y) > limit ? (this.y/Math.abs(this.y))*limit : this.y;
 
     return new Vector(this.x, this.y);
   }

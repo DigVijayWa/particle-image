@@ -16,11 +16,14 @@ public class Particle {
 
   private int size;
 
+  private boolean fixed = false;
+
   public Particle(double xPosition, double yPosition) {
     position = new Vector(xPosition, yPosition);
     accelaration = new Vector(0, 0);
     velocity = new Vector(0,0);
     gravity = new Vector(0, 5);
+    size = 2;
   }
 
   public void render(Graphics2D graphics2D, Color color) {
@@ -28,16 +31,19 @@ public class Particle {
     graphics2D.setColor(color);
     graphics2D.drawLine((int) position.getX(), (int) position.getY(), (int) position.getX(),
         (int) position.getY());
+
+   // graphics2D.fillOval((int) position.getX(), (int) position.getY(), size, size);
     graphics2D.setColor(prevColor);
   }
 
   public void update(long timePassed, Vector velocity) {
-
-    long timePassedSeconds = GameUtility.getTimeInMiliSeconds(timePassed);
-    this.velocity = velocity;
-    accelaration = accelaration.additionVector(accelaration, this.velocity, timePassedSeconds);
-    position = position.additionVector(position, accelaration, timePassedSeconds);
-    accelaration.setXandY(0, 0);
+    if(!fixed) {
+      long timePassedSeconds = GameUtility.getTimeInMiliSeconds(timePassed);
+      this.velocity = velocity;
+      accelaration = accelaration.additionVector(accelaration, this.velocity, timePassedSeconds);
+      position = position.additionVector(position, accelaration, timePassedSeconds);
+      accelaration.setXandY(0, 0);
+    }
   }
 
   public Vector getPosition() {
@@ -78,5 +84,13 @@ public class Particle {
 
   public void setVelocity(Vector velocity) {
     this.velocity = velocity;
+  }
+
+  public boolean isFixed() {
+    return fixed;
+  }
+
+  public void setFixed(boolean fixed) {
+    this.fixed = fixed;
   }
 }
