@@ -31,8 +31,6 @@ public class Particle {
     graphics2D.setColor(color);
     graphics2D.drawLine((int) position.getX(), (int) position.getY(), (int) position.getX(),
         (int) position.getY());
-
-   // graphics2D.fillOval((int) position.getX(), (int) position.getY(), size, size);
     graphics2D.setColor(prevColor);
   }
 
@@ -40,8 +38,8 @@ public class Particle {
     if(!fixed) {
       long timePassedSeconds = GameUtility.getTimeInMiliSeconds(timePassed);
       this.velocity = velocity;
-      accelaration = accelaration.additionVector(accelaration, this.velocity, timePassedSeconds);
-      position = position.additionVector(position, accelaration, timePassedSeconds);
+      accelaration = accelaration.additionVector(this.velocity, timePassedSeconds);
+      position = position.additionVector(accelaration, timePassedSeconds);
       accelaration.setXandY(0, 0);
     }
   }
