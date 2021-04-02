@@ -2,4 +2,5 @@
 
 This is a mere attempt to achieve the steering mechanics in particles to construct an image.
 
-![particles](https://user-images.githubusercontent.com/30470311/113440425-fe7aa880-9409-11eb-8eb4-e3161d564957.mp4)
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/30470311/113441375-cc6a4600-940b-11eb-99a8-8ded768a9dd1.gif)
+
