@@ -1,5 +1,6 @@
 package utility;
 
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Optional;
 import javax.imageio.ImageIO;
@@ -18,8 +19,9 @@ public class Countours {
   }
   public static Optional<BufferedImage> readImage() {
     try {
+      ClassLoader classLoader = Countours.class.getClassLoader();
       return Optional
-          .of(ImageIO.read(new File("C:\\Users\\i353455\\Desktop\\particle-image\\src\\main\\resources\\panda.png")));
+          .of(ImageIO.read(new File(classLoader.getResource("panda.png").getFile())));
     } catch (IOException e) {
       e.printStackTrace();
     }
