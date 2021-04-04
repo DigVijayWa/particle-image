@@ -1,12 +1,18 @@
 package components.events;
 
-public interface ComponentEventListener {
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-  void onClickComponent(ComponentEvent componentEvent);
+public abstract class ComponentEventListener extends MouseAdapter {
 
-  void loadingComplete(ComponentEvent componentEvent);
+  public void mousePressed(MouseEvent event) {
 
-  void componentLifeCycleChanged(ComponentEvent componentEvent);
+  }
+  void onClickComponent(ComponentEvent componentEvent) {}
 
-  void componentValueChanged(ComponentEvent componentEvent);
+  void loadingComplete(ComponentEvent componentEvent) {}
+
+  void componentLifeCycleChanged(ComponentEvent componentEvent) {}
+
+  void componentValueChanged(ComponentEvent componentEvent) {}
 }

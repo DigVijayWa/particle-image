@@ -22,13 +22,18 @@ public class Vector {
   }
 
   public double getMagnitude() {
-    double addition = (x * x) + (y * y);
-    return Math.sqrt(addition);
+    return Math.sqrt(getMagnitudeSquare());
   }
 
-  public Vector additionVector(Vector vector, long timeLapsed) {
-    return new Vector(this.getX() + vector.getX() * 1,
-        this.getY() + vector.getY() * 1);
+  public double getMagnitudeSquare() {
+    return (x * x) + (y * y);
+  }
+
+  public Vector additionVector(Vector vector, double timeLapsed) {
+
+    vector = vector.multiplyByScalar(timeLapsed);
+    return new Vector(this.getX() + vector.getX(),
+        this.getY() + vector.getY());
   }
 
   public Vector additionVector(Vector vector) {
@@ -38,6 +43,10 @@ public class Vector {
 
   public Vector subtractionVector(Vector vector) {
     return new Vector(this.getX() - vector.getX(), this.getY() - vector.getY());
+  }
+
+  public Vector divideByScalar(double scalar) {
+    return new Vector(this.x/scalar, this.y/scalar);
   }
 
   public void setXY() {
@@ -55,15 +64,22 @@ public class Vector {
   }
 
   public Vector limitVector(double limit) {
-    this.x = Math.abs(this.x) > limit ? (this.x / Math.abs(this.x)) * limit : this.x;
-    this.y = Math.abs(this.y) > limit ? (this.y / Math.abs(this.y)) * limit : this.y;
-
-    return new Vector(this.x, this.y);
+    double magnitudeSquared = this.getMagnitudeSquare();
+    Vector result = new Vector(this.x,this.y);
+    if(magnitudeSquared > limit*limit) {
+      result = this.divideByScalar(Math.sqrt(magnitudeSquared));
+      result.multiplyByScalar(limit);
+    }
+    return result;
   }
 
   public boolean equals(Vector otherVector, double precision) {
     return Math.abs(this.x - otherVector.getX()) <= precision
         && Math.abs(this.y - otherVector.getY()) <= precision;
+  }
+
+  public double distance(Vector otherVector) {
+    return Math.sqrt(Math.pow(this.x - otherVector.x, 2) + Math.pow(this.y-otherVector.y, 2));
   }
 
   public double getX() {

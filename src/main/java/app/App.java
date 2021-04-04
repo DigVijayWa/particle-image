@@ -5,22 +5,32 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-import objects.Handler;
+import objects.HandlerImageParticle;
+import objects.HandlerTrackerParticle;
 import utility.MouseListener;
 
 public class App extends Canvas implements Runnable{
 
   private Thread thread;
 
-  Handler handler = new Handler();
+  HandlerImageParticle handlerImageParticle = new HandlerImageParticle();
+
+  HandlerTrackerParticle handlerTrackerParticle = new HandlerTrackerParticle();
 
   private static final int width = 640;
   private static final int height = 640;
   static int totalSeconds = 1;
   private boolean running = false;
 
+  public enum DisplayType {
+    IMAGE_DISPLAY,
+    TRACKER_DISPLAY
+  };
+
+  public DisplayType displayType = DisplayType.IMAGE_DISPLAY;
+
   public App() {
-    this.addMouseListener(new MouseListener(handler));
+    this.addMouseListener(new MouseListener(handlerImageParticle, handlerTrackerParticle, this));
   }
 
   @Override
@@ -41,7 +51,10 @@ public class App extends Canvas implements Runnable{
       lastTime = now;
 
       if (unprocessed >= 1.0) {
-        handler.update(difference);
+        if(displayType == DisplayType.IMAGE_DISPLAY)
+          handlerImageParticle.update(difference);
+        else
+          handlerTrackerParticle.update(difference);
         unprocessed--;
         tps++;
         canRender = true;
@@ -78,7 +91,10 @@ public class App extends Canvas implements Runnable{
 
     clearScreen(g);
 
-    handler.render(g);
+    if(displayType == DisplayType.IMAGE_DISPLAY)
+      handlerImageParticle.render(g);
+    else
+      handlerTrackerParticle.render(g);
 
 
     g.dispose();
@@ -104,6 +120,14 @@ public class App extends Canvas implements Runnable{
   }
   public static void main(String args[]) {
     new FrameSetter(width,height,new app.App());
+  }
+
+  public DisplayType getDisplayType() {
+    return displayType;
+  }
+
+  public void setDisplayType(DisplayType displayType) {
+    this.displayType = displayType;
   }
 }
 

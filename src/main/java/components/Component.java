@@ -2,6 +2,7 @@ package components;
 
 import components.enums.ComponentLifeCycle;
 import components.enums.ComponentType;
+import components.events.ComponentEventListener;
 import java.awt.Graphics2D;
 import java.util.Optional;
 
@@ -17,6 +18,29 @@ public abstract class Component {
   private ComponentType componentType;
 
   private ComponentLifeCycle componentLifeCycle;
+
+  private ComponentEventListener componentEventListener;
+
+  public Component(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+
+
+  public Component(double x, double y, Optional<String> labelText,
+      ComponentType componentType, ComponentLifeCycle componentLifeCycle) {
+    this.x = x;
+    this.y = y;
+    this.labelText = labelText;
+    this.componentType = componentType;
+    this.componentLifeCycle = componentLifeCycle;
+  }
+
+  public Component(double x, double y, Optional<String> labelText) {
+    this.x = x;
+    this.y = y;
+    this.labelText = labelText;
+  }
 
   public double getX() { return x; }
 
@@ -50,5 +74,9 @@ public abstract class Component {
 
   public void setComponentLifeCycle(ComponentLifeCycle componentLifeCycle) {
     this.componentLifeCycle = componentLifeCycle;
+  }
+
+  public void addMouseListener(ComponentEventListener componentEventListener) {
+    this.componentEventListener = componentEventListener;
   }
 }

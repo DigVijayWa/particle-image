@@ -4,9 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import utility.Countours;
+import utility.GameUtility;
 import utility.Vector;
 
-public class Handler {
+public class HandlerImageParticle {
 
   /**
    * Lets consider the box of 640 * 640
@@ -32,11 +33,11 @@ public class Handler {
 
   int counter = 0;
 
-  public Handler() {
+  public HandlerImageParticle() {
     for (int i = 0; i < HEIGHT; i++) {
       for (int j = 0; j < WIDTH; j++) {
-        particles[j][i] = new Particle(mapRandomValue(Math.random()), mapRandomValue(Math.random()));
-        randomPosition[j][i] = new Vector(mapRandomValue(Math.random()), mapRandomValue(Math.random()));
+        particles[j][i] = new Particle(GameUtility.mapRandomValue(Math.random()),GameUtility.mapRandomValue(Math.random()));
+        randomPosition[j][i] = new Vector(GameUtility.mapRandomValue(Math.random()), GameUtility.mapRandomValue(Math.random()));
       }
     }
 
@@ -63,9 +64,9 @@ public class Handler {
           }else {
             target.setXandY(j + offsetX, i + offsetY);
           }
-          Vector desired = calculateEffectiveVector(particles[j][i].getPosition(), target).normalize().multiplyByScalar(3);
+          Vector desired = GameUtility.calculateEffectiveVector(particles[j][i].getPosition(), target).normalize().multiplyByScalar(Particle.maxSpeed);
 
-          Vector velocity = calculateEffectiveVector(particles[j][i].getVelocity(), desired).limitVector(2);
+          Vector velocity = GameUtility.calculateEffectiveVector(particles[j][i].getVelocity(), desired).limitVector(Particle.maxForce);
 
           particles[j][i].update(passedTime, velocity);
 
@@ -77,10 +78,6 @@ public class Handler {
       }
     }
 
-  private static Vector calculateEffectiveVector(Vector currentPosition, Vector targetPosition) {
-     return targetPosition.subtractionVector(currentPosition);
-  }
-
   public boolean isDispersion() {
     return dispersion;
   }
@@ -91,9 +88,6 @@ public class Handler {
 
   public boolean getDispersion() {
     return this.dispersion;
-  }
-  public double mapRandomValue(double randomValue) {
-    return 0 + ((640)) * (randomValue - 0);
   }
 
   public int getOffsetX() {

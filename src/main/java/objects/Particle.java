@@ -18,6 +18,14 @@ public class Particle {
 
   private boolean fixed = false;
 
+  public static double maxSpeed = 210;
+
+  public static double maxForce = 100;
+
+  public static double attractionDistance = 100;
+
+  public static double minForce = 50;
+
   public Particle(double xPosition, double yPosition) {
     position = new Vector(xPosition, yPosition);
     accelaration = new Vector(0, 0);
@@ -34,12 +42,14 @@ public class Particle {
     graphics2D.setColor(prevColor);
   }
 
-  public void update(long timePassed, Vector velocity) {
+  public void update(long timePassed, Vector accelaration) {
     if(!fixed) {
-      long timePassedSeconds = GameUtility.getTimeInMiliSeconds(timePassed);
-      this.velocity = velocity;
-      accelaration = accelaration.additionVector(this.velocity, timePassedSeconds);
-      position = position.additionVector(accelaration, timePassedSeconds);
+
+      double timePassedSeconds = 0.01666666666;
+      this.accelaration = accelaration;
+      velocity = velocity.additionVector(this.accelaration);
+      velocity = velocity.limitVector(maxSpeed);
+      position = position.additionVector(velocity, timePassedSeconds);
       accelaration.setXandY(0, 0);
     }
   }
@@ -90,5 +100,29 @@ public class Particle {
 
   public void setFixed(boolean fixed) {
     this.fixed = fixed;
+  }
+
+  public Vector getGravity() {
+    return gravity;
+  }
+
+  public void setGravity(Vector gravity) {
+    this.gravity = gravity;
+  }
+
+  public double getMaxSpeed() {
+    return maxSpeed;
+  }
+
+  public void setMaxSpeed(double maxSpeed) {
+    this.maxSpeed = maxSpeed;
+  }
+
+  public double getMaxForce() {
+    return maxForce;
+  }
+
+  public void setMaxForce(double maxForce) {
+    this.maxForce = maxForce;
   }
 }
