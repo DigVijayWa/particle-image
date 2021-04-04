@@ -18,13 +18,13 @@ public class Particle {
 
   private boolean fixed = false;
 
-  public static double maxSpeed = 210;
+  public static double maxSpeed = 150;
 
-  public static double maxForce = 100;
+  public static double maxForce = 180;
 
   public static double attractionDistance = 100;
 
-  public static double minForce = 50;
+  public static double minForce = 10;
 
   public Particle(double xPosition, double yPosition) {
     position = new Vector(xPosition, yPosition);

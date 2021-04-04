@@ -20,7 +20,7 @@ public class HandlerImageParticle {
 
   Vector[][] randomPosition = new Vector[WIDTH][HEIGHT];
 
-  Vector target = new Vector(100,100);
+  Vector target = new Vector(100, 100);
 
   int[][] countours = new int[160][160];
 
@@ -36,8 +36,10 @@ public class HandlerImageParticle {
   public HandlerImageParticle() {
     for (int i = 0; i < HEIGHT; i++) {
       for (int j = 0; j < WIDTH; j++) {
-        particles[j][i] = new Particle(GameUtility.mapRandomValue(Math.random()),GameUtility.mapRandomValue(Math.random()));
-        randomPosition[j][i] = new Vector(GameUtility.mapRandomValue(Math.random()), GameUtility.mapRandomValue(Math.random()));
+        particles[j][i] = new Particle(GameUtility.mapRandomValue(Math.random()),
+            GameUtility.mapRandomValue(Math.random()));
+        randomPosition[j][i] = new Vector(GameUtility.mapRandomValue(Math.random()),
+            GameUtility.mapRandomValue(Math.random()));
       }
     }
 
@@ -57,26 +59,29 @@ public class HandlerImageParticle {
   public void update(long passedTime) {
     counter = 0;
     Vector mag = null;
-      for (int i = 0; i < HEIGHT; i++) {
-        for (int j = 0; j < WIDTH; j++) {
-          if(dispersion) {
-            target.setXandY(randomPosition[j][i].getX(), randomPosition[j][i].getY());
-          }else {
-            target.setXandY(j + offsetX, i + offsetY);
-          }
-          Vector desired = GameUtility.calculateEffectiveVector(particles[j][i].getPosition(), target).normalize().multiplyByScalar(Particle.maxSpeed);
+    for (int i = 0; i < HEIGHT; i++) {
+      for (int j = 0; j < WIDTH; j++) {
+        if (dispersion) {
+          target.setXandY(randomPosition[j][i].getX(), randomPosition[j][i].getY());
+        } else {
+          target.setXandY(j + offsetX, i + offsetY);
+        }
+        Vector desired = GameUtility.calculateEffectiveVector(particles[j][i].getPosition(), target)
+            .normalize().multiplyByScalar(Particle.maxSpeed);
 
-          Vector velocity = GameUtility.calculateEffectiveVector(particles[j][i].getVelocity(), desired).limitVector(Particle.maxForce);
+        Vector velocity = GameUtility
+            .calculateEffectiveVector(particles[j][i].getVelocity(), desired)
+            .limitVector(Particle.maxForce);
 
-          particles[j][i].update(passedTime, velocity);
+        particles[j][i].update(passedTime, velocity);
 
-          if(particles[j][i].getPosition().equals(target, 2)) {
-            particles[j][i].setPosition(new Vector(target.getX(), target.getY()));
-            particles[j][i].setFixed(true);
-          }
+        if (particles[j][i].getPosition().equals(target, 2)) {
+          particles[j][i].setPosition(new Vector(target.getX(), target.getY()));
+          particles[j][i].setFixed(true);
         }
       }
     }
+  }
 
   public boolean isDispersion() {
     return dispersion;

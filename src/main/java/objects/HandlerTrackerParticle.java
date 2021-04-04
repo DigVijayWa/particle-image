@@ -47,7 +47,7 @@ public class HandlerTrackerParticle {
           Vector desired = GameUtility
               .calculateEffectiveVector(particles[j][i].getPosition(), targets.get(index))
               .normalize()
-              .multiplyByScalar(scalar);
+              .multiplyByScalar(Particle.maxSpeed);
 
           Vector velocity = GameUtility
               .calculateEffectiveVector(particles[j][i].getVelocity(), desired)
