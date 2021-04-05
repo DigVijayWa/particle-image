@@ -63,9 +63,9 @@ public class FrameSetter {
   }
 
   public void initSlider() {
-    maxSpeedControl = new JSlider(JSlider.HORIZONTAL, 50, 300, 210);
-    maxForceControl = new JSlider(JSlider.HORIZONTAL, 50, 300, 210);
-    minForceControl = new JSlider(JSlider.HORIZONTAL, 50, 300, 210);
+    maxSpeedControl = new JSlider(JSlider.HORIZONTAL, 50, 500, 210);
+    maxForceControl = new JSlider(JSlider.HORIZONTAL, 35, 250, 75);
+    minForceControl = new JSlider(JSlider.HORIZONTAL, 20, 250, 50);
 
     maxSpeedControl.addChangeListener(e -> SliderValues.setMaxSpeed(maxSpeedControl.getValue()));
 

@@ -28,7 +28,7 @@ public class App extends Canvas implements Runnable{
     TRACKER_DISPLAY
   }
 
-  public DisplayType displayType = DisplayType.IMAGE_DISPLAY;
+  public DisplayType displayType = DisplayType.TRACKER_DISPLAY;
 
   public App() {
     MouseListener mouseListener = new MouseListener(handlerImageParticle, handlerTrackerParticle, this);
