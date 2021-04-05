@@ -2,7 +2,6 @@ package objects;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import utility.GameUtility;
 import utility.Vector;
 
 public class Particle {
@@ -18,13 +17,13 @@ public class Particle {
 
   private boolean fixed = false;
 
-  public static double maxSpeed = 150;
+  public static double maxSpeed = 210;
 
-  public static double maxForce = 180;
+  public static double maxForce = 30;
 
   public static double attractionDistance = 100;
 
-  public static double minForce = 10;
+  public static double minForce = 30;
 
   public Particle(double xPosition, double yPosition) {
     position = new Vector(xPosition, yPosition);

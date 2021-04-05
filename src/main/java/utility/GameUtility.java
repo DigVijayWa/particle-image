@@ -17,11 +17,12 @@ public class GameUtility {
     return 0 + ((640)) * (randomValue - 0);
   }
 
-  public static int mapRange(double input, double inputStart, double inputEnd, double outputStart,
+  public static double mapRange(double input, double inputStart, double inputEnd, double outputStart,
       double outputEnd) {
-    double output =
-        outputStart + ((outputEnd - outputStart) / (inputEnd - inputStart)) * (input - inputStart);
-    return (int) Math.floor(output);
+    if (input > inputEnd) {
+      return SliderValues.getMaxSpeed();
+    }
+    return outputStart + ((outputEnd - outputStart) / (inputEnd - inputStart)) * (input - inputStart);
   }
 
   public static Vector calculateEffectiveVector(Vector currentPosition, Vector targetPosition) {
@@ -31,9 +32,9 @@ public class GameUtility {
   public static double calculateScalarOnDistance(double distance, double maxVelocity) {
     //
     if (distance > Particle.attractionDistance) {
-      return Particle.minForce;
+      return SliderValues.getMinForce();
     }
-    return maxVelocity + ((Particle.minForce - maxVelocity) / Particle.attractionDistance) * (distance);
+    return maxVelocity + ((SliderValues.getMinForce() - maxVelocity) / Particle.attractionDistance) * (distance);
   }
 
   public static Color getColorOnSpeed(double magnitude) {

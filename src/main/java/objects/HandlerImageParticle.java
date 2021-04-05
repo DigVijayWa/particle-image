@@ -3,8 +3,10 @@ package objects;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import javafx.scene.control.Slider;
 import utility.Countours;
 import utility.GameUtility;
+import utility.SliderValues;
 import utility.Vector;
 
 public class HandlerImageParticle {
@@ -66,12 +68,17 @@ public class HandlerImageParticle {
         } else {
           target.setXandY(j + offsetX, i + offsetY);
         }
+
+        double scalar = GameUtility
+            .mapRange(particles[j][i].getPosition().distance(target),
+                0, 640, SliderValues.getMinForce(), SliderValues.getMaxSpeed());
+
         Vector desired = GameUtility.calculateEffectiveVector(particles[j][i].getPosition(), target)
-            .normalize().multiplyByScalar(Particle.maxSpeed);
+            .normalize().multiplyByScalar(scalar);
 
         Vector velocity = GameUtility
             .calculateEffectiveVector(particles[j][i].getVelocity(), desired)
-            .limitVector(Particle.maxForce);
+            .limitVector(SliderValues.getMaxForce());
 
         particles[j][i].update(passedTime, velocity);
 

@@ -4,11 +4,12 @@ import app.App;
 import app.App.DisplayType;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import objects.HandlerImageParticle;
 import objects.HandlerTrackerParticle;
 
-public class MouseListener extends MouseAdapter {
+public class MouseListener extends MouseAdapter implements MouseMotionListener {
 
   private HandlerImageParticle handlerImageParticle;
 
@@ -20,6 +21,11 @@ public class MouseListener extends MouseAdapter {
     this.handlerImageParticle = handlerImageParticle;
     this.handlerTrackerParticle = handlerTrackerParticle;
     this.app = app;
+  }
+
+  @Override
+  public void mouseMoved(MouseEvent event) {
+    handlerTrackerParticle.setMouseTarget(new Vector(event.getX(), event.getY()));
   }
 
   @Override

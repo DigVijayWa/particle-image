@@ -5,9 +5,8 @@ import java.awt.event.MouseEvent;
 
 public abstract class ComponentEventListener extends MouseAdapter {
 
-  public void mousePressed(MouseEvent event) {
+  public void mousePressed(MouseEvent event) { }
 
-  }
   void onClickComponent(ComponentEvent componentEvent) {}
 
   void loadingComplete(ComponentEvent componentEvent) {}
