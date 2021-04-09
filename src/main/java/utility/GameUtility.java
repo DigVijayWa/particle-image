@@ -19,7 +19,7 @@ public class GameUtility {
 
   public static double mapRange(double input, double inputStart, double inputEnd, double outputStart,
       double outputEnd) {
-    if (input > inputEnd) {
+    if(input > inputEnd) {
       return SliderValues.getMinForce();
     }
     return outputStart + ((outputEnd - outputStart) / (inputEnd - inputStart)) * (input - inputStart);

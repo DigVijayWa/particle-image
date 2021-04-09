@@ -52,7 +52,7 @@ public class HandlerTrackerParticle {
         if (target != null) {
           double scalar = GameUtility
               .mapRange(particles[j][i].getPosition().distance(target),
-                  0, 100, SliderValues.getMaxSpeed(), SliderValues.getMinForce());
+                  0, 200, SliderValues.getMaxSpeed(), SliderValues.getMinForce());
 
           Vector velocity = seek(particles[j][i].getPosition(), target,
               particles[j][i].getVelocity(), scalar);
